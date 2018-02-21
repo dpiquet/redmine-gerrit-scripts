@@ -56,7 +56,6 @@ if __name__ == '__main__':
     parser.add_option('-s', '--uploader', dest='uploader')
     parser.add_option('-o', '--commit', dest='commit')
     parser.add_option('-a', '--patchset', dest='patchset')
-    parser.add_option('-d', '--is-draft', dest='isdraft')
     parser.add_option('-t', '--topic', dest='topic')
 
     (options, x) = parser.parse_args(sys.argv)
@@ -74,14 +73,9 @@ if __name__ == '__main__':
         print("This is not the first patchset ({}) for this issue ({}), will not update the status".format(options.patchset, options.changeurl))
         sys.exit(0)
 
-# Don't change the status, only put a note. Otherwise uncomment the lines below.
+# Don't change the status, only put a note. Otherwise uncomment the line below.
     IN_REVIEW_STATUS = None
-# for drafts, change the status to "In Progress"...
-#    if options.isdraft == str("true"):
-#        IN_REVIEW_STATUS = 2
-# ... otherwise change to "Fix Uploaded"
-#    else:
-#        IN_REVIEW_STATUS = 10
+#    IN_REVIEW_STATUS = 10
 
     regex = re.compile(REDMINE_ISSUE_ID_REGEX, re.IGNORECASE)
     mgi = regex.finditer(commitmsg.decode("utf-8"))
@@ -91,10 +85,7 @@ if __name__ == '__main__':
            print("no issue set here")
            sys.exit(0)
 
-       if options.isdraft == str("true"):
-           redminecomment = "Gerrit received a related DRAFT patchset "
-       else:
-           redminecomment = "Gerrit received a related patchset "
+       redminecomment = "Gerrit received a related patchset "
        redminecomment += "'{}' for Issue #{}.\n".format(options.patchset, redmineid)
        redminecomment += "Uploader: {}\n".format(options.uploader)
        redminecomment += "Change-Id: {}\n".format(options.changeid)
