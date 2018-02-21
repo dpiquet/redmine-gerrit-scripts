@@ -15,7 +15,7 @@
 # data. It can also change the status of the issue to indicate that this issue is now
 # under gerrit review.
 #
-# Script is tested with Redmine 2.4.1 and Gerrit 2.6.1
+# Script is tested with Redmine 3.4 stable and Gerrit 2.15.2
 
 # set your API key here. You can find it under "My account" in Redmine, i.e. http://redmine.mydomain.com/my/account
 REDMINE_API_KEY = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"
@@ -50,10 +50,14 @@ import json
 if __name__ == '__main__':
     parser = optparse.OptionParser()
     parser.add_option('-c', '--change', dest='changeid')
+    parser.add_option('-k', '--kind', dest='kind')
     parser.add_option('-u', '--change-url', dest='changeurl')
+    parser.add_option('-w', '--change-owner', dest='changeowner')
+    parser.add_option('-n', '--change-owner-username', dest='changeuser')
     parser.add_option('-p', '--project', dest='project')
     parser.add_option('-b', '--branch', dest='branch')
     parser.add_option('-s', '--uploader', dest='uploader')
+    parser.add_option('-l', '--uploader-username', dest='uploaderuser')
     parser.add_option('-o', '--commit', dest='commit')
     parser.add_option('-a', '--patchset', dest='patchset')
     parser.add_option('-t', '--topic', dest='topic')
